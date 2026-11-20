@@ -849,6 +849,8 @@ def update(S, frame):
         vel = R["pvel"]
         pos = base + vel * age[:, None] + np.stack([np.zeros(NP), np.zeros(NP), 0.25 * age ** 2], 1)
         size = np.where(alive, 0.018 * np.sin(np.pi * np.clip(age / life, 0, 1)) ** 0.6, 0.0)
+        cp = np.array(S["cam"].location)
+        size = size * np.clip((np.linalg.norm(pos - cp, axis=1) - 1.5) / 1.5, 0, 1)   # nothing on the lens
         tet = np.array([[1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1]], float)
         pv = pos[:, None, :] + tet[None, :, :] * size[:, None, None]
     me = S["parts_ob"].data
