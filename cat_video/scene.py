@@ -916,7 +916,7 @@ def scene_sun_nap(w, cat, cam, tgt, N):
             ph = ((t + i * 0.55) % 1.65) / 1.65
             z.location = (2.75 - ph * 0.05, 0.12 - ph * 0.22, 0.8 + ph * 0.3)
             z.rotation_euler = (D(90), 0, D(-55 + 20 * math.sin(t * 3 + i)))
-            s = math.sin(ph * math.pi)
+            s = max(0.02, math.sin(ph * math.pi))
             z.scale = (s, s, s)
             z.keyframe_insert("location", frame=f)
             z.keyframe_insert("rotation_euler", frame=f)
@@ -929,8 +929,8 @@ def scene_sun_nap(w, cat, cam, tgt, N):
 
 def scene_zoomies(w, cat, cam, tgt, N):
     """12:00 — zoomies: a mad sprint around the coffee table, camera chasing."""
-    cx, cy, rx, ry = 1.45, 0.75, 1.3, 1.25
-    w.pillow.location = (2.2, -0.1, 0.09)            # already knocked off the sofa
+    cx, cy, rx, ry = 1.3, 0.8, 1.12, 1.2
+    w.pillow.location = (2.45, -0.6, 0.09)            # already knocked off the sofa
     w.pillow.rotation_euler = (D(80), D(10), D(30))
     dur = N / FPS
     laps = 1.1
@@ -972,13 +972,10 @@ def scene_zoomies(w, cat, cam, tgt, N):
             keyloc(d, f + 8, loc=p - dirv * 0.35 + Vector((0, 0, 0.12)), scale=(1.1, 1.1, 1.0))
             keyloc(d, f + 9, loc=(0, 0, -5))
         # chase camera: behind & outside the loop, lagging
-        pc, ac = pos_at(t + 0.3)
-        outward = Vector((math.cos(ac), math.sin(ac), 0))
-        campos = pc + outward * 1.1 + Vector((0, 0, 0.55))
-        campos.x = min(campos.x, 2.45)
-        campos.y = max(min(campos.y, 3.2), -3.5)
-        campos.x = max(campos.x, -3.2)
-        cam_key(cam, tgt, f, campos, p + Vector((0, 0, 0.2)), lens=24 if f == 1 else None)
+        # dolly along the front of the room, sliding with the cat
+        ac = pos_at(max(0.0, t - 0.15))[1]
+        campos = Vector((cx - 0.4 + 0.9 * math.cos(ac), cy - 2.5 + 0.5 * math.sin(ac), 0.7))
+        cam_key(cam, tgt, f, campos, p + Vector((0, 0, 0.18)), lens=30 if f == 1 else None)
 
 
 def scene_glass_push(w, cat, cam, tgt, N):
@@ -1076,7 +1073,7 @@ def scene_fake_sleep(w, cat, cam, tgt, N):
     w.glass.location = (0.82, 0.12, 0.045)
     w.glass.rotation_euler = (D(90), 0, D(30))
     w.puddle.hide_render = False
-    w.pillow.location = (2.2, -0.1, 0.09)
+    w.pillow.location = (2.45, -0.6, 0.09)
     w.pillow.rotation_euler = (D(80), D(10), D(30))
     # shot A 0-0.9 s: cat on the sofa, wide awake, hears the key.
     # shot B 0.9-1.8 s: the door opens.  shot C 1.8 s-end: cat "asleep", one-eye peek.
