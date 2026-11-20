@@ -1161,6 +1161,7 @@ def main():
     ap.add_argument("--save-blend", action="store_true")
     ap.add_argument("--step", type=int, default=1, help="render every Nth frame (quick animatic)")
     ap.add_argument("--out", default="frames", help="output folder inside build/")
+    ap.add_argument("--fresh", action="store_true", help="delete previously rendered frames first")
     a = ap.parse_args()
     world, cat, cam, tgt = build()
     setup_render(a.scale, a.samples)
@@ -1184,10 +1185,18 @@ def main():
             out = os.path.join(HERE, "build", a.out, f"s{n}")
             sc.frame_step = a.step
             os.makedirs(out, exist_ok=True)
-            for f in os.listdir(out):
-                os.remove(os.path.join(out, f))
-            sc.render.filepath = os.path.join(out, "")
-            bpy.ops.render.render(animation=True)
+            if a.fresh:
+                for f in os.listdir(out):
+                    os.remove(os.path.join(out, f))
+            # frame by frame, skipping frames already on disk -> resumable after a crash
+            for f in range(sc.frame_start, sc.frame_end + 1, a.step):
+                path = os.path.join(out, f"{f:04d}.png")
+                if os.path.exists(path):
+                    continue
+                sc.frame_set(f)
+                sc.render.filepath = path + ".tmp.png"
+                bpy.ops.render.render(write_still=True)
+                os.replace(path + ".tmp.png", path)
 
 
 if __name__ == "__main__":
