@@ -1,0 +1,3 @@
+cat_video/build/
+cat_video/__pycache__/
+*.mp4.tmp

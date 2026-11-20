@@ -1,0 +1,61 @@
+{
+  "_comment": "Edit this file to change texts, clock times, durations, colours and lighting. Then run: python3 scene.py --render all && python3 compose.py",
+
+  "video": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "samples": 10,
+    "output": "what_happens_cat_home_alone.mp4"
+  },
+
+  "cat": {
+    "fur": "#E8832A",
+    "stripes": "#A94F16",
+    "cream": "#F8E6C8",
+    "eyes": "#5FCB3E",
+    "pupil": "#111111",
+    "nose": "#E7849A",
+    "inner_ear": "#F0A0A0",
+    "stripe_density": 1.0
+  },
+
+  "room": {
+    "walls": "#EFE3D3",
+    "floor": "#B07A4E",
+    "sofa": "#2F6E72",
+    "pillow": "#E3A23A",
+    "rug": "#D8C2A2",
+    "table": "#C99A68",
+    "door": "#5D7385",
+    "curtains": "#D98C58",
+    "plant": "#3F8F4F",
+    "pot": "#C2643C"
+  },
+
+  "texts": {
+    "title": ["What happens after you leave", "your cat to go to work?"],
+    "subtitle": "HOME ALONE",
+    "final": ["He was asleep the whole time.", "Obviously."],
+    "title_opacity": 0.82,
+    "final_starts_at_scene": 7,
+    "final_delay": 1.9
+  },
+
+  "lighting": {
+    "morning":   {"sun_color": "#FFC98A", "sun_strength": 4.0, "sun_elevation": 16, "sun_azimuth": 28, "ambient": "#B9A894", "ambient_strength": 0.55, "sky_top": "#8FB8E8", "sky_bottom": "#FFD2A0", "city_windows": 0.3, "lamp": 0.0, "fill": "#FFE7CC"},
+    "noon":      {"sun_color": "#FFFBF2", "sun_strength": 4.6, "sun_elevation": 52, "sun_azimuth": 20, "ambient": "#C9D3DE", "ambient_strength": 0.8, "sky_top": "#5E9BE6", "sky_bottom": "#CFE6FF", "city_windows": 0.0, "lamp": 0.0, "fill": "#F4F7FF"},
+    "afternoon": {"sun_color": "#FF9E52", "sun_strength": 4.2, "sun_elevation": 10, "sun_azimuth": 22, "ambient": "#B08F7C", "ambient_strength": 0.55, "sky_top": "#7C86C9", "sky_bottom": "#FFA15C", "city_windows": 0.6, "lamp": 0.0, "fill": "#FFD3B0"},
+    "dusk":      {"sun_color": "#FF7A3A", "sun_strength": 3.0, "sun_elevation": 5,  "sun_azimuth": 25, "ambient": "#8E7590", "ambient_strength": 0.45, "sky_top": "#5A5A9E", "sky_bottom": "#FF8A4C", "city_windows": 1.6, "lamp": 1.0, "fill": "#FFC9A0"}
+  },
+
+  "scenes": [
+    {"n": 1, "id": "door_close",  "clock": "8:00",  "duration": 3.0, "light": "morning",   "preview_frame": 60},
+    {"n": 2, "id": "drama_flop",  "clock": "8:05",  "duration": 2.5, "light": "morning",   "preview_frame": 60},
+    {"n": 3, "id": "sun_nap",     "clock": "10:00", "duration": 2.5, "light": "morning",   "preview_frame": 40},
+    {"n": 4, "id": "zoomies",     "clock": "12:00", "duration": 3.0, "light": "noon",      "preview_frame": 30},
+    {"n": 5, "id": "glass_push",  "clock": "14:00", "duration": 3.5, "light": "noon",      "preview_frame": 50},
+    {"n": 6, "id": "bird_watch",  "clock": "16:00", "duration": 2.5, "light": "afternoon", "preview_frame": 40},
+    {"n": 7, "id": "fake_sleep",  "clock": "17:30", "duration": 4.2, "light": "dusk",      "preview_frame": 100}
+  ]
+}
